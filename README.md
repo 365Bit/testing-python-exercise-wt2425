@@ -114,6 +114,44 @@ FAILED tests/unit/test_diffusion2d_functions.py::test_set_initial_condition - As
 
 ### unittest log
 
+```bash
+python -m unittest tests/unit/test_diffusion2d_functions.py
+Fdt = 0.21666666666666667
+FF
+======================================================================
+FAIL: test_initialize_domain (tests.unit.test_diffusion2d_functions.TestDiffusion2D.test_initialize_domain)
+Check function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Rene\source\repos\SSE\testing-python-exercise-wt2425\tests\unit\test_diffusion2d_functions.py", line 20, in test_initialize_domain
+    assert self.solver.ny == ny, "Returned ny does not match expected ny"
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: Returned ny does not match expected ny
+
+======================================================================
+FAIL: test_initialize_physical_parameters (tests.unit.test_diffusion2d_functions.TestDiffusion2D.test_initialize_physical_parameters)
+Checks function SolveDiffusion2D.initialize_domain
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Rene\source\repos\SSE\testing-python-exercise-wt2425\tests\unit\test_diffusion2d_functions.py", line 30, in test_initialize_physical_parameters
+    self.assertAlmostEqual(self.solver.dt, dt, places=4, msg="Returned dt does not match expected dt")
+AssertionError: 0.21666666666666667 != 0.0083 within 4 places (0.20836666666666667 difference) : Returned dt does not match expected dt
+
+======================================================================
+FAIL: test_set_initial_condition (tests.unit.test_diffusion2d_functions.TestDiffusion2D.test_set_initial_condition)
+Checks function SolveDiffusion2D.get_initial_function
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Rene\source\repos\SSE\testing-python-exercise-wt2425\tests\unit\test_diffusion2d_functions.py", line 57, in test_set_initial_condition
+    self.assertAlmostEqual(u[i,j], solver_u[i,j], places=2, msg="Returned initial condition does not match expected initial condition")
+AssertionError: np.float64(500.0) != np.float64(365.0) within 2 places (np.float64(135.0) difference) : Returned initial condition does not match expected initial condition
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.006s
+
+FAILED (failures=3)
+```
+
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
