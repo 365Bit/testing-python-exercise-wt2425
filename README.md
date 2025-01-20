@@ -152,6 +152,82 @@ Ran 3 tests in 0.006s
 FAILED (failures=3)
 ```
 
+### Integration test log
+
+```bash
+====================================================================================================================================== test session starts =======================================================================================================================================
+platform win32 -- Python 3.12.8, pytest-8.3.4, pluggy-1.5.0
+rootdir: C:\Users\Rene\source\repos\SSE\testing-python-exercise-wt2425
+collected 2 items
+
+tests\integration\test_diffusion2d.py FF                                                                                                                                                                                                                                                    [100%]
+
+============================================================================================================================================ FAILURES ============================================================================================================================================
+______________________________________________________________________________________________________________________________ test_initialize_physical_parameters _______________________________________________________________________________________________________________________________
+
+    def test_initialize_physical_parameters():
+        """
+        Checks function SolveDiffusion2D.initialize_domain
+        """
+        solver = SolveDiffusion2D()
+
+        dt = 0.0208
+        solver.initialize_domain(2., 3., 0.5, 0.5)
+        solver.initialize_physical_parameters(3., 365., 500.)
+
+>       assert pytest.approx(dt, abs=0.0001) == solver.dt, "Returned dt does not match expected dt"
+E       AssertionError: Returned dt does not match expected dt
+E       assert 0.0208 ± 1.0e-04 == 0.16666666666666669
+E
+E         comparison failed
+E         Obtained: 0.16666666666666669
+E         Expected: 0.0208 ± 1.0e-04
+
+tests\integration\test_diffusion2d.py:20: AssertionError
+-------------------------------------------------------------------------------------------------------------------------------------- Captured stdout call --------------------------------------------------------------------------------------------------------------------------------------
+dt = 0.16666666666666669
+___________________________________________________________________________________________________________________________________ test_set_initial_condition ___________________________________________________________________________________________________________________________________
+
+    def test_set_initial_condition():
+        """
+        Checks function SolveDiffusion2D.get_initial_function
+        """
+        solver = SolveDiffusion2D()
+
+        u = np.array([
+            [300.0, 300.0, 300.0, 300.0, 300.0],
+            [300.0, 300.0, 300.0, 300.0, 300.0],
+            [300.0, 300.0, 300.0, 300.0, 300.0],
+            [300.0, 300.0, 300.0, 300.0, 300.0],
+            [300.0, 300.0, 300.0, 300.0, 300.0]
+        ])
+
+        solver.initialize_domain(0.5, 0.5, 0.1, 0.1)
+        solver.initialize_physical_parameters(5., 300., 700.)
+        solver_u = solver.set_initial_condition()
+
+>       assert pytest.approx(u, abs=0.01) == solver_u, "Returned initial condition does not match expected initial condition"
+E       AssertionError: Returned initial condition does not match expected initial condition
+E       assert approx([[300....0 ± 1.0e-02]]) == array([[700.,... 700., 700.]])
+E
+E         comparison failed. Mismatched elements: 25 / 25:
+E         Max absolute difference: 400.0
+E         Max relative difference: 0.5714285714285714
+E         Index  | Obtained | Expected
+E         (0, 0) | 700.0    | 300.0 ± 1.0e-02
+E         (0, 1) | 700.0    | 300.0 ± 1.0e-02...
+E
+E         ...Full output truncated (23 lines hidden), use '-vv' to show
+
+tests\integration\test_diffusion2d.py:41: AssertionError
+-------------------------------------------------------------------------------------------------------------------------------------- Captured stdout call --------------------------------------------------------------------------------------------------------------------------------------
+dt = -0.04
+==================================================================================================================================== short test summary info =====================================================================================================================================
+FAILED tests/integration/test_diffusion2d.py::test_initialize_physical_parameters - AssertionError: Returned dt does not match expected dt
+FAILED tests/integration/test_diffusion2d.py::test_set_initial_condition - AssertionError: Returned initial condition does not match expected initial condition
+======================================================================================================================================= 2 failed in 0.53s ========================================================================================================================================
+```
+
 ## Citing
 
 The code used in this exercise is based on [Chapter 7 of the book "Learning Scientific Programming with Python"](https://scipython.com/book/chapter-7-matplotlib/examples/the-two-dimensional-diffusion-equation/).
